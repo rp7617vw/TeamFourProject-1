@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-2.1.3.min.js"></script>
+    <script src="Scripts/ractive.js"></script>
+</head>
+<body>
+    <div id="menu"></div>
+    <div id="main"></div>
+    <script>
+        //var hello = $.get('/api/User');
+        //var post = $.post('')
+        //alert(hello.__proto__.toString());
+
+        //var person = {
+        //    firstName: "Christophe",
+        //    lastName: "Coenraets",
+        //    blogURL: "http://coenraets.org"
+        //};
+        //var template = "<h1>{{firstName}} {{lastName}}</h1>Blog: {{blogURL}}";
+        //var html = Mustache.to_html(template, person);
+        //$('#body').html(html);
+        menu = function (data) {
+            this.id = data;
+            this.el = null;
+
+
+            this.init();
+        };
+
+        menu.prototype.init = function () {
+            this.el = $('<div>' + this.id + '</div>');
+            this.el.css({
+                width: function () { return $(window).width() * .197 },
+                height: function () { return $(window).height() * .197 },
+                background: 'green',
+                color: 'white',
+                float: 'left',
+                "font-size": '400%',
+                "z-index": 1
+            })
+            $('#menu').append(this.el);
+            
+            this.methods();
+        };
+
+        menu.prototype.methods = function () {
+            //https://api.jquery.com/jQuery.proxy/
+            //explains why we are using $.proxy
+            //binds an event to different context
+            this.el.on('click', $.proxy(this.open));
+            this.el.on('mouseover', $.proxy(this.hello));           
+        }
+        
+        menu.prototype.open = function(){
+            $.proxy(new category(this.id));
+        }
+
+        menu.prototype.move = function () {
+            $('body').append(this.el);
+        }
+
+        menu.prototype.hover = function () {
+            $('body').append('<div>bye</div>');
+        }
+
+        category = function (id) {
+            this.el = null;
+            this.id = id;
+
+            this.init();
+        }
+
+        category.prototype.init = function () {
+            this.el = $('<div><div>');
+            this.el.css({
+                width: $(window).width() ,
+                height: $(window).height() ,
+                background: 'black',
+                margin: 'auto 0'
+            })
+            $('#main').append(this.el);
+        }
+
+        $(function () {
+            for (var i = 0; i < 5; i++) {
+                new menu(i);
+            }            
+        })
+    </script>
+</body>
+</html>

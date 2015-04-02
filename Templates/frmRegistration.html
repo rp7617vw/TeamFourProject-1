@@ -1,0 +1,31 @@
+﻿<div id="content-title">Get Signed Up Today</div>
+<div id="content-body">
+    <p>
+        <input type="text" value="{{user.fName}}" />
+    </p>
+    <p>
+        <input type="text" value="{{user.lName}}" />
+    </p>
+    <p>
+        <input type="text" value="{{user.email}}" />
+    </p>
+    <p>
+        <input type="text" value="{{user.uName}}" />
+    </p>
+    <p>
+        <input type="text" value="{{user.pass}}" />
+    </p>
+    <p>
+        <input type="checkbox" value="{{user.notify}}" />
+    </p>
+    <p>
+        <input type="text" value="{{user.cellNo}}" style="{{user.cellprovider.style}}" />
+    </p>
+    <p>
+        <input type="text" value="{{user.cellProvider}}" style="{{user.cellprovider.style}}" />
+    </p>
+    <p>
+        <input type="checkbox" value="{{user.termsOfService}}" style="{{user.agreeToPolicy}}" />I agree to MavBuy <term on-click="alert">Terms of Service</term>
+    </p>
+    <input type="button" value="submit" on-click="getRegistered" />
+</div>

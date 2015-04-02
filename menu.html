@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="Content/pure.css" rel="stylesheet" />
+    <link href="Content/custom.css" rel="stylesheet" />
+    <title>MavBuy</title>
+    <script src="Scripts/ractive.js"></script>
+    <script src="Scripts/jquery-2.1.3.min.js"></script>
+    <script src="Scripts/d3.js"></script>
+</head>
+<body>
+    <div id="container">
+        <div id="menu">
+            <input type="button" value="No Force" onclick="changeForce(0,0)" />
+            <input type="button" value="Mutual Repulsion" onclick="changeForce(-60, 0)" />
+            <input type="button" value="Mutual Attraction" onclick="changeForce(60,0)" />
+            <input type="button" value="Gravity" onclick="changeForce(0, 0.02)" />
+            <input type="button" value="Gravity with Repulsion" onclick="changeForce(-30,0.1)" />
+        </div>
+        <div id="main"></div>
+    </div>
+    <script type="text/javascript">
+        var w = 1280, h = 800;
+        var force = d3.layout.force()
+            .size([w,h])
+            .gravity(0)
+            .charge(0)
+            .friction(0.95);
+
+        var svg = d3.select("main")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
+
+        force.on("tick", function () {
+            svg.selectAll("circle")
+            .attr("cx", function (d) {
+                return d.x;
+            })
+            .attr("cy", function (d) {
+                return d.y;
+            });
+        });
+
+        svg.on("mousemove", function () {
+            var point = d3.mouse(this),
+                node = { x: point[0], y: point[1] };
+            svg.append("circle")
+            .data([node])
+            .attr("class", "node")
+            .attr("cx", function (d) {
+                return d.x;
+            })
+            .attr("cy", function (d) {
+                return d.y;
+            })
+            .attr("r", 1e-6)
+            .transition()
+            .attr("r", 4.5)
+            .transition()
+            .delay(7000)
+            .attr("r", 1e-6)
+            .each("end", function () {
+                force.nodes().shift();
+            })
+            .remove();
+
+            force.nodes().push(node);
+            force.start();
+        });
+
+        function changeForce(charge, gravity) {
+            force.charge(charge).gravity(gravity);
+        }
+    </script>
+</body>
+</html>

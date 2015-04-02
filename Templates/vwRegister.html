@@ -1,0 +1,18 @@
+﻿<link rel='ractive' href='DonutChart.html'>
+
+<!-- legend -->
+<ul>
+    {{#each colors}}
+    <li>
+        <span class='block' style='background-color: {{this}}'></span>
+        <span>{{@key}}</span>
+    </li>
+    {{/each}}
+</ul>
+
+{{#each months:i}}
+<donutchart style='width: 16.666%;' points='{{points}}' selected='{{id}}' delay='{{i*50}}'>
+    <p>{{name}}</p>
+</donutchart>
+{{/each}}
+

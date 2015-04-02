@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-2.1.3.min.js"></script>
+    <script src="Scripts/ractive.js"></script>
+</head>
+<body>
+    <script>
+        $.get('/Templates/frmRegistration.html').then(function (template) {
+            var ractive = new Ractive({
+                el: 'body',
+                template: template
+            });
+            ractive.on({
+                submit: function () {
+
+                    var myUser = ractive.get('user');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/User',
+                        data: myUser,
+                        dataType: 'json',
+                        success: function (dataUserRespo) {
+                        }
+                    })
+                }
+            })
+        })
+
+
+        
+    </script>
+</body>
+</html>
